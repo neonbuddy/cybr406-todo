@@ -7,5 +7,50 @@
         xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-3.8.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
 
     <!-- Homework 3: Complete the change log by adding elements to this file. -->
-
+        <changeSet id = "todo-table" author = "Tanner">
+            <createTable tableName="TODO">
+                <column name="ID" autoIncrement="true" type="BIGINT">
+                    <constraints primaryKeyName="PRIMARY_KEY_TODO" nullable="false" primaryKey="true"/>
+                </column>
+                <column name="AUTHOR" type="VARCHAR(255)">
+                    <!-- Currently no constraints -->
+                </column>
+                <column name="DETAILS" type = "CLOB">
+                    <!-- Currently no constraints -->
+                </column>
+            </createTable>
+        </changeSet>
+        <changeSet id="task-table" author="Tanner">
+            <createTable tableName="TASK">
+                <column name="ID" autoIncrement="true" type="BIGINT">
+                    <constraints primaryKeyName="PRIMARY_KEY_TASK" nullable="false" primaryKey="true"/>
+                </column>
+                <column name="COMPLETED" type="BOOLEAN">
+                    <!-- Currently no constraints -->
+                </column>
+                <column name="DETAILS" type = "CLOB">
+                    <!-- Currently no constraints -->
+                </column>
+                <column name="TODO_ID" type="CLOB">
+                    <!-- Currently no constraints -->
+                </column>
+            </createTable>
+        </changeSet>
+        <changeSet id="todo-id-index" author="Tanner">
+            <createIndex tableName="TASK" indexName="TODO_ID_INDEX">
+                <column name="TODO_ID">
+                    <!-- Currently no constraints -->
+                </column>
+            </createIndex>
+        </changeSet>
+        <changeSet id="todo-id-foreign-key" author="Tanner">
+            <addForeignKeyConstraint
+                    baseTableName="TASK"
+                    baseColumnNames="TODO_ID"
+                    constraintName="TODO_ID_FOREIGN_KEY"
+                    referencedTableName="TODO"
+                    referencedColumnNames="ID"
+                    onDelete="CASCADE"
+                    onUpdate="CASCADE"/>
+        </changeSet>
 </databaseChangeLog>
